@@ -14,7 +14,7 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static('./'));
 
 // Razorpay Instance
 const razorpay = new Razorpay({
@@ -37,11 +37,11 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-producti
 // Middleware to verify JWT token
 const verifyToken = (req, res, next) => {
     const token = req.headers.authorization?.split(' ')[1];
-    
+
     if (!token) {
         return res.status(401).json({ error: 'Access denied. No token provided.' });
     }
-    
+
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
         req.user = decoded;
@@ -54,11 +54,11 @@ const verifyToken = (req, res, next) => {
 // Admin verification middleware
 const verifyAdmin = async (req, res, next) => {
     const token = req.headers.authorization?.split(' ')[1];
-    
+
     if (!token) {
         return res.status(401).json({ error: 'Access denied.' });
     }
-    
+
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
         if (decoded.email !== process.env.ADMIN_EMAIL) {
@@ -76,26 +76,26 @@ const verifyAdmin = async (req, res, next) => {
 app.post('/api/auth/register', async (req, res) => {
     try {
         const { fullName, email, mobile, password } = req.body;
-        
+
         // Check if user exists
         const userExists = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
         if (userExists.rows.length > 0) {
             return res.status(400).json({ error: 'Email already registered.' });
         }
-        
+
         // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
-        
+
         // Generate verification code
         const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
-        
+
         // Insert user
         const result = await pool.query(
             `INSERT INTO users (full_name, email, mobile, password, verification_code, email_verified) 
              VALUES ($1, $2, $3, $4, $5, false) RETURNING id, full_name, email, mobile, created_at`,
             [fullName, email, mobile, hashedPassword, verificationCode]
         );
-        
+
         // Send verification email
         const mailOptions = {
             from: process.env.EMAIL_USER,
@@ -107,12 +107,12 @@ app.post('/api/auth/register', async (req, res) => {
                 <p>This code will expire in 10 minutes.</p>
             `
         };
-        
+
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) console.log('Email error:', error);
         });
-        
-        res.status(201).json({ 
+
+        res.status(201).json({
             message: 'Registration successful. Please check your email for verification code.',
             user: result.rows[0],
             verificationCode: verificationCode // Remove in production
@@ -127,25 +127,25 @@ app.post('/api/auth/register', async (req, res) => {
 app.post('/api/auth/verify-email', async (req, res) => {
     try {
         const { email, verificationCode } = req.body;
-        
+
         const result = await pool.query(
             'SELECT * FROM users WHERE email = $1 AND verification_code = $2',
             [email, verificationCode]
         );
-        
+
         if (result.rows.length === 0) {
             return res.status(400).json({ error: 'Invalid verification code.' });
         }
-        
+
         await pool.query(
             'UPDATE users SET email_verified = true, verification_code = NULL WHERE email = $1',
             [email]
         );
-        
+
         const user = result.rows[0];
         const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '7d' });
-        
-        res.json({ 
+
+        res.json({
             message: 'Email verified successfully.',
             token,
             user: {
@@ -165,14 +165,14 @@ app.post('/api/auth/verify-email', async (req, res) => {
 app.post('/api/auth/resend-code', async (req, res) => {
     try {
         const { email } = req.body;
-        
+
         const newCode = Math.floor(100000 + Math.random() * 900000).toString();
-        
+
         await pool.query(
             'UPDATE users SET verification_code = $1 WHERE email = $2',
             [newCode, email]
         );
-        
+
         // Send email
         const mailOptions = {
             from: process.env.EMAIL_USER,
@@ -180,10 +180,10 @@ app.post('/api/auth/resend-code', async (req, res) => {
             subject: 'New Verification Code - SatAns',
             html: `<p>Your new verification code is: <strong>${newCode}</strong></p>`
         };
-        
+
         transporter.sendMail(mailOptions);
-        
-        res.json({ 
+
+        res.json({
             message: 'New verification code sent.',
             verificationCode: newCode // Remove in production
         });
@@ -196,26 +196,26 @@ app.post('/api/auth/resend-code', async (req, res) => {
 app.post('/api/auth/login', async (req, res) => {
     try {
         const { email, password } = req.body;
-        
+
         const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
-        
+
         if (result.rows.length === 0) {
             return res.status(400).json({ error: 'Invalid credentials.' });
         }
-        
+
         const user = result.rows[0];
-        
+
         if (!user.email_verified) {
             return res.status(400).json({ error: 'Please verify your email first.' });
         }
-        
+
         const validPassword = await bcrypt.compare(password, user.password);
         if (!validPassword) {
             return res.status(400).json({ error: 'Invalid credentials.' });
         }
-        
+
         const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '7d' });
-        
+
         res.json({
             token,
             user: {
@@ -249,21 +249,21 @@ app.post('/api/auth/admin-login', async (req, res) => {
 app.post('/api/auth/forgot-password', async (req, res) => {
     try {
         const { email } = req.body;
-        
+
         const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
-        
+
         if (result.rows.length === 0) {
             return res.status(404).json({ error: 'Email not found.' });
         }
-        
+
         const resetToken = crypto.randomBytes(32).toString('hex');
         const resetExpiry = new Date(Date.now() + 3600000); // 1 hour
-        
+
         await pool.query(
             'UPDATE users SET reset_token = $1, reset_expiry = $2 WHERE email = $3',
             [resetToken, resetExpiry, email]
         );
-        
+
         // Send reset email
         const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
         const mailOptions = {
@@ -277,9 +277,9 @@ app.post('/api/auth/forgot-password', async (req, res) => {
                 <p>This link will expire in 1 hour.</p>
             `
         };
-        
+
         transporter.sendMail(mailOptions);
-        
+
         res.json({ message: 'Password reset link sent to your email.' });
     } catch (error) {
         res.status(500).json({ error: 'Failed to process request.' });
@@ -297,7 +297,7 @@ app.get('/api/user/profile', verifyToken, async (req, res) => {
              WHERE u.id = $1`,
             [req.user.id]
         );
-        
+
         res.json(result.rows[0]);
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch profile.' });
@@ -310,7 +310,7 @@ app.get('/api/user/profile', verifyToken, async (req, res) => {
 app.post('/api/payment/create-order', verifyToken, async (req, res) => {
     try {
         const { packageName, amount } = req.body;
-        
+
         const options = {
             amount: amount * 100, // amount in smallest currency unit (paise)
             currency: 'INR',
@@ -320,9 +320,9 @@ app.post('/api/payment/create-order', verifyToken, async (req, res) => {
                 packageName: packageName
             }
         };
-        
+
         const order = await razorpay.orders.create(options);
-        
+
         res.json({
             orderId: order.id,
             amount: order.amount,
@@ -339,47 +339,47 @@ app.post('/api/payment/create-order', verifyToken, async (req, res) => {
 app.post('/api/payment/verify', verifyToken, async (req, res) => {
     try {
         const { razorpay_order_id, razorpay_payment_id, razorpay_signature, packageName, amount } = req.body;
-        
+
         // Verify signature
         const body = razorpay_order_id + '|' + razorpay_payment_id;
         const expectedSignature = crypto
             .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET)
             .update(body.toString())
             .digest('hex');
-        
+
         if (expectedSignature !== razorpay_signature) {
             return res.status(400).json({ error: 'Payment verification failed.' });
         }
-        
+
         // Payment successful - Create subscription
         const validUntil = new Date();
         validUntil.setMonth(validUntil.getMonth() + 1);
-        
+
         const result = await pool.query(
             `INSERT INTO subscriptions (user_id, package_name, amount, status, start_date, valid_until, transaction_id)
              VALUES ($1, $2, $3, 'active', NOW(), $4, $5)
              RETURNING *`,
             [req.user.id, packageName, amount, validUntil, razorpay_payment_id]
         );
-        
+
         // Create receipt
         await pool.query(
             `INSERT INTO payment_receipts (user_id, transaction_id, package_name, amount, payment_gateway)
              VALUES ($1, $2, $3, $4, 'razorpay')`,
             [req.user.id, razorpay_payment_id, packageName, amount]
         );
-        
+
         // Notify admin
         await pool.query(
             `INSERT INTO admin_notifications (type, message, user_id)
              VALUES ('subscription', $1, $2)`,
             [`New subscription: ${packageName} by user ${req.user.id}`, req.user.id]
         );
-        
+
         // Send confirmation email
         const userResult = await pool.query('SELECT email, full_name FROM users WHERE id = $1', [req.user.id]);
         const user = userResult.rows[0];
-        
+
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to: user.email,
@@ -393,9 +393,9 @@ app.post('/api/payment/verify', verifyToken, async (req, res) => {
                 <p><strong>Valid Until:</strong> ${validUntil.toLocaleDateString()}</p>
             `
         };
-        
+
         transporter.sendMail(mailOptions);
-        
+
         res.json({
             message: 'Subscription activated successfully!',
             subscription: result.rows[0]
@@ -416,11 +416,11 @@ app.get('/api/payment/receipt/:transactionId', verifyToken, async (req, res) => 
              WHERE r.transaction_id = $1 AND r.user_id = $2`,
             [req.params.transactionId, req.user.id]
         );
-        
+
         if (result.rows.length === 0) {
             return res.status(404).json({ error: 'Receipt not found.' });
         }
-        
+
         res.json(result.rows[0]);
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch receipt.' });
@@ -433,20 +433,20 @@ app.get('/api/payment/receipt/:transactionId', verifyToken, async (req, res) => 
 app.post('/api/contact/submit', async (req, res) => {
     try {
         const { fullName, email, mobile, service, message } = req.body;
-        
+
         const result = await pool.query(
             `INSERT INTO contact_submissions (full_name, email, mobile, service, message)
              VALUES ($1, $2, $3, $4, $5) RETURNING *`,
             [fullName, email, mobile, service, message]
         );
-        
+
         // Notify admin
         await pool.query(
             `INSERT INTO admin_notifications (type, message)
              VALUES ('contact', $1)`,
             [`New contact form from ${fullName} - ${service}`]
         );
-        
+
         // Send notification email to admin
         const mailOptions = {
             from: process.env.EMAIL_USER,
@@ -462,9 +462,9 @@ app.post('/api/contact/submit', async (req, res) => {
                 <p><strong>Message:</strong> ${message}</p>
             `
         };
-        
+
         transporter.sendMail(mailOptions);
-        
+
         res.json({ message: 'Form submitted successfully!', submission: result.rows[0] });
     } catch (error) {
         console.error('Contact form error:', error);
@@ -484,7 +484,7 @@ app.get('/api/admin/users', verifyAdmin, async (req, res) => {
              LEFT JOIN subscriptions s ON u.id = s.user_id AND s.status = 'active'
              ORDER BY u.created_at DESC`
         );
-        
+
         res.json(result.rows);
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch users.' });
@@ -501,7 +501,7 @@ app.get('/api/admin/subscriptions', verifyAdmin, async (req, res) => {
              WHERE s.status = 'active'
              ORDER BY s.start_date DESC`
         );
-        
+
         res.json(result.rows);
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch subscriptions.' });
@@ -514,7 +514,7 @@ app.get('/api/admin/contacts', verifyAdmin, async (req, res) => {
         const result = await pool.query(
             'SELECT * FROM contact_submissions ORDER BY submitted_at DESC'
         );
-        
+
         res.json(result.rows);
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch contacts.' });
@@ -527,7 +527,7 @@ app.get('/api/admin/notifications', verifyAdmin, async (req, res) => {
         const result = await pool.query(
             'SELECT * FROM admin_notifications ORDER BY created_at DESC LIMIT 50'
         );
-        
+
         res.json(result.rows);
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch notifications.' });
@@ -541,7 +541,7 @@ app.put('/api/admin/notifications/:id/read', verifyAdmin, async (req, res) => {
             'UPDATE admin_notifications SET read = true WHERE id = $1',
             [req.params.id]
         );
-        
+
         res.json({ message: 'Notification marked as read.' });
     } catch (error) {
         res.status(500).json({ error: 'Failed to update notification.' });
@@ -578,14 +578,14 @@ app.get('/api/portfolio', async (req, res) => {
 app.post('/api/admin/portfolio', verifyAdmin, async (req, res) => {
     try {
         const { title, description, image_url, category, project_url, display_order } = req.body;
-        
+
         const result = await pool.query(
             `INSERT INTO portfolio_items (title, description, image_url, category, project_url, display_order)
              VALUES ($1, $2, $3, $4, $5, $6)
              RETURNING *`,
             [title, description, image_url, category, project_url, display_order || 0]
         );
-        
+
         res.status(201).json({
             message: 'Portfolio item created successfully!',
             item: result.rows[0]
@@ -600,7 +600,7 @@ app.put('/api/admin/portfolio/:id', verifyAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         const { title, description, image_url, category, project_url, display_order, is_active } = req.body;
-        
+
         const result = await pool.query(
             `UPDATE portfolio_items
              SET title = $1, description = $2, image_url = $3, category = $4,
@@ -609,11 +609,11 @@ app.put('/api/admin/portfolio/:id', verifyAdmin, async (req, res) => {
              RETURNING *`,
             [title, description, image_url, category, project_url, display_order, is_active, id]
         );
-        
+
         if (result.rows.length === 0) {
             return res.status(404).json({ error: 'Portfolio item not found.' });
         }
-        
+
         res.json({
             message: 'Portfolio item updated successfully!',
             item: result.rows[0]
@@ -627,16 +627,16 @@ app.put('/api/admin/portfolio/:id', verifyAdmin, async (req, res) => {
 app.delete('/api/admin/portfolio/:id', verifyAdmin, async (req, res) => {
     try {
         const { id } = req.params;
-        
+
         const result = await pool.query(
             'DELETE FROM portfolio_items WHERE id = $1 RETURNING *',
             [id]
         );
-        
+
         if (result.rows.length === 0) {
             return res.status(404).json({ error: 'Portfolio item not found.' });
         }
-        
+
         res.json({ message: 'Portfolio item deleted successfully!' });
     } catch (error) {
         res.status(500).json({ error: 'Failed to delete portfolio item.' });
@@ -673,14 +673,14 @@ app.get('/api/packages', async (req, res) => {
 app.post('/api/admin/packages', verifyAdmin, async (req, res) => {
     try {
         const { name, description, price, duration_days, features, display_order } = req.body;
-        
+
         const result = await pool.query(
             `INSERT INTO packages (name, description, price, duration_days, features, display_order)
              VALUES ($1, $2, $3, $4, $5, $6)
              RETURNING *`,
             [name, description, price, duration_days || 30, features, display_order || 0]
         );
-        
+
         res.status(201).json({
             message: 'Package created successfully!',
             package: result.rows[0]
@@ -695,7 +695,7 @@ app.put('/api/admin/packages/:id', verifyAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         const { name, description, price, duration_days, features, display_order, is_active } = req.body;
-        
+
         const result = await pool.query(
             `UPDATE packages
              SET name = $1, description = $2, price = $3, duration_days = $4,
@@ -704,11 +704,11 @@ app.put('/api/admin/packages/:id', verifyAdmin, async (req, res) => {
              RETURNING *`,
             [name, description, price, duration_days, features, display_order, is_active, id]
         );
-        
+
         if (result.rows.length === 0) {
             return res.status(404).json({ error: 'Package not found.' });
         }
-        
+
         res.json({
             message: 'Package updated successfully!',
             package: result.rows[0]
@@ -722,16 +722,16 @@ app.put('/api/admin/packages/:id', verifyAdmin, async (req, res) => {
 app.delete('/api/admin/packages/:id', verifyAdmin, async (req, res) => {
     try {
         const { id } = req.params;
-        
+
         const result = await pool.query(
             'DELETE FROM packages WHERE id = $1 RETURNING *',
             [id]
         );
-        
+
         if (result.rows.length === 0) {
             return res.status(404).json({ error: 'Package not found.' });
         }
-        
+
         res.json({ message: 'Package deleted successfully!' });
     } catch (error) {
         res.status(500).json({ error: 'Failed to delete package.' });
@@ -745,20 +745,20 @@ app.put('/api/admin/contacts/:id/status', verifyAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         const { status } = req.body;
-        
+
         if (!['pending', 'contacted', 'resolved'].includes(status)) {
             return res.status(400).json({ error: 'Invalid status. Must be: pending, contacted, or resolved' });
         }
-        
+
         const result = await pool.query(
             'UPDATE contact_submissions SET status = $1 WHERE id = $2 RETURNING *',
             [status, id]
         );
-        
+
         if (result.rows.length === 0) {
             return res.status(404).json({ error: 'Contact submission not found.' });
         }
-        
+
         res.json({
             message: 'Contact status updated successfully!',
             contact: result.rows[0]
@@ -771,6 +771,10 @@ app.put('/api/admin/contacts/:id/status', verifyAdmin, async (req, res) => {
 // ==================== START SERVER ====================
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}
+
+module.exports = app;

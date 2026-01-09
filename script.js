@@ -1,9 +1,29 @@
+// ==================== DARK MODE TOGGLE ====================
+// Check for saved dark mode preference
+const savedDarkMode = localStorage.getItem('darkMode');
+if (savedDarkMode === 'true') {
+    document.body.classList.add('dark-mode');
+}
+
+// Dark mode toggle handler
+document.addEventListener('DOMContentLoaded', () => {
+    const darkModeToggle = document.getElementById('darkModeToggle');
+
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDarkMode);
+        });
+    }
+});
+
 // Footer button handlers
 document.addEventListener('DOMContentLoaded', () => {
     // LOGIN button in footer
     const footerLoginBtn = document.getElementById('footerLoginBtn');
     if (footerLoginBtn) {
-        footerLoginBtn.addEventListener('click', function(e) {
+        footerLoginBtn.addEventListener('click', function (e) {
             e.preventDefault();
             showModal('loginModal');
         });
@@ -12,36 +32,36 @@ document.addEventListener('DOMContentLoaded', () => {
     // PRICING button in footer
     const footerPricingBtn = document.getElementById('footerPricingBtn');
     if (footerPricingBtn) {
-        footerPricingBtn.addEventListener('click', function(e) {
+        footerPricingBtn.addEventListener('click', function (e) {
             e.preventDefault();
             // Always reload packages when opening pricing from footer, for all users
             showAllPackagesModal();
         });
     }
 
-// Show all packages in the subscription modal for any user
-async function showAllPackagesModal() {
-    showModal('subscriptionModal');
-    document.getElementById('userSubscriptionDetails').innerHTML = '';
-    document.getElementById('availablePackagesList').innerHTML = '<p style="color:#666;text-align:center;">Loading packages...</p>';
-    try {
-        const res = await fetch('http://localhost:3000/api/packages');
-        const packages = await res.json();
-        if (!Array.isArray(packages) || packages.length === 0) {
-            document.getElementById('availablePackagesList').innerHTML = '<p style="color:#666;text-align:center;">No packages available.</p>';
-            return;
-        }
-        document.getElementById('availablePackagesList').innerHTML = packages.map(pkg => `
+    // Show all packages in the subscription modal for any user
+    async function showAllPackagesModal() {
+        showModal('subscriptionModal');
+        document.getElementById('userSubscriptionDetails').innerHTML = '';
+        document.getElementById('availablePackagesList').innerHTML = '<p style="color:#666;text-align:center;">Loading packages...</p>';
+        try {
+            const res = await fetch('http://localhost:3000/api/packages');
+            const packages = await res.json();
+            if (!Array.isArray(packages) || packages.length === 0) {
+                document.getElementById('availablePackagesList').innerHTML = '<p style="color:#666;text-align:center;">No packages available.</p>';
+                return;
+            }
+            document.getElementById('availablePackagesList').innerHTML = packages.map(pkg => `
             <div class=\"dashboard-card\" style=\"margin-bottom:18px;\">\n                <h4>${pkg.name} Package</h4>\n                <p><strong>Price:</strong> ₹${parseFloat(pkg.price).toLocaleString()}</p>\n                <p><strong>Duration:</strong> ${pkg.duration_days} days</p>\n                <p><strong>Features:</strong> ${Array.isArray(pkg.features) ? pkg.features.length : 0} items</p>\n                ${Array.isArray(pkg.features) ? `<ul style=\"margin: 10px 0; padding-left: 20px;\">${pkg.features.map(f => `<li>${f}</li>`).join('')}</ul>` : ''}\n                <span class=\"admin-badge ${pkg.is_active ? 'active' : 'inactive'}\">${pkg.is_active ? 'Active' : 'Inactive'}</span>\n            </div>`).join('');
-    } catch (error) {
-        document.getElementById('availablePackagesList').innerHTML = `<p style='color:red;text-align:center;'>Failed to load packages.</p>`;
+        } catch (error) {
+            document.getElementById('availablePackagesList').innerHTML = `<p style='color:red;text-align:center;'>Failed to load packages.</p>`;
+        }
     }
-}
 
     // PORTFOLIO button in footer
     const footerPortfolioBtn = document.getElementById('footerPortfolioBtn');
     if (footerPortfolioBtn) {
-        footerPortfolioBtn.addEventListener('click', function(e) {
+        footerPortfolioBtn.addEventListener('click', function (e) {
             e.preventDefault();
             handlePortfolioClick();
         });
@@ -99,7 +119,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         const href = this.getAttribute('href');
         if (href === '#' || !href || href === '#!') return; // Skip empty anchors
-        
+
         e.preventDefault();
         const target = document.querySelector(href);
         if (target) {
@@ -119,13 +139,13 @@ const navbar = document.querySelector('.navbar');
 if (navbar) {
     window.addEventListener('scroll', () => {
         const currentScroll = window.pageYOffset;
-        
+
         if (currentScroll > 100) {
             navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.15)';
         } else {
             navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
         }
-        
+
         lastScroll = currentScroll;
     });
 }
@@ -136,7 +156,7 @@ const contactForm = document.querySelector('#contactForm');
 if (contactForm) {
     contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
         // Get form values
         const formData = {
             fullName: contactForm.querySelector('input[name="fullName"]').value,
@@ -145,15 +165,15 @@ if (contactForm) {
             service: contactForm.querySelector('select[name="service"]').value,
             message: contactForm.querySelector('textarea[name="message"]').value
         };
-        
+
         try {
             await apiCall('/contact/submit', 'POST', formData);
-            
+
             console.log('Contact form submitted:', formData);
-            
+
             // Show success message
             alert('Thank you for reaching out! We will get back to you within 24 hours.');
-            
+
             // Reset form
             contactForm.reset();
         } catch (error) {
@@ -227,7 +247,7 @@ function setAdminAdminPanelVisible(isVisible) {
 // Call setAdminAdminPanelVisible(true) after successful admin login
 // Call setAdminAdminPanelVisible(false) after admin logout
 
-document.getElementById('adminLogoutBtn')?.addEventListener('click', function() {
+document.getElementById('adminLogoutBtn')?.addEventListener('click', function () {
     // Clear admin session (implement as needed)
     setAdminAdminPanelVisible(false);
     // Optionally redirect or show login modal
@@ -302,7 +322,7 @@ async function checkLoginStatus() {
     const loginBtn = document.getElementById('loginBtn');
     const adminBtn = document.getElementById('adminBtn');
     const userMenu = document.getElementById('userMenu');
-    
+
     if (adminToken) {
         // Admin is logged in
         loginBtn.style.display = 'none';
@@ -321,7 +341,7 @@ async function checkLoginStatus() {
         try {
             const userData = await apiCall('/user/profile');
             localStorage.setItem('currentUser', JSON.stringify(userData));
-            
+
             loginBtn.style.display = 'none';
             adminBtn.style.display = 'block';
             userMenu.style.display = 'block';
@@ -351,7 +371,7 @@ function updateDashboardInfo(user) {
     document.getElementById('dashName').textContent = user.full_name;
     document.getElementById('dashEmail').textContent = user.email;
     document.getElementById('dashMobile').textContent = user.mobile;
-    
+
     if (user.package_name && user.subscription_status === 'active') {
         document.getElementById('dashPackage').textContent = user.package_name;
         document.getElementById('dashStatus').textContent = 'Active';
@@ -369,30 +389,30 @@ function initializeAuthSystem() {
     // Modal controls
     const modals = document.querySelectorAll('.modal');
     const closeBtns = document.querySelectorAll('.close-modal');
-    
+
     // Close modal when clicking X
     closeBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             const modalId = this.getAttribute('data-modal');
             closeModal(modalId);
         });
     });
-    
+
     // Close modal when clicking outside
     modals.forEach(modal => {
-        modal.addEventListener('click', function(e) {
+        modal.addEventListener('click', function (e) {
             if (e.target === this) {
                 closeModal(this.id);
             }
         });
     });
-    
+
     // Login button click
     document.getElementById('loginBtn')?.addEventListener('click', (e) => {
         e.preventDefault();
         showModal('loginModal');
     });
-    
+
     // Admin button click
     document.getElementById('adminBtn')?.addEventListener('click', (e) => {
         e.preventDefault();
@@ -412,62 +432,62 @@ function initializeAuthSystem() {
         e.preventDefault();
         adminLogout();
     });
-    
+
     // Portfolio link click
     document.getElementById('portfolioLink')?.addEventListener('click', (e) => {
         e.preventDefault();
         handlePortfolioClick();
     });
-    
+
     // Forgot password link
     document.getElementById('forgotPasswordLink')?.addEventListener('click', (e) => {
         e.preventDefault();
         closeModal('loginModal');
         showModal('forgotPasswordModal');
     });
-    
+
     // Switch between login and register
     document.getElementById('showRegisterModal')?.addEventListener('click', (e) => {
         e.preventDefault();
         closeModal('loginModal');
         showModal('registerModal');
     });
-    
+
     document.getElementById('showLoginModal')?.addEventListener('click', (e) => {
         e.preventDefault();
         closeModal('registerModal');
         showModal('loginModal');
     });
-    
-        // Dashboard link
-        document.getElementById('dashboardLink')?.addEventListener('click', (e) => {
-                e.preventDefault();
-                showModal('dashboardModal');
-        });
-        // Profile link
-        document.getElementById('profileLink')?.addEventListener('click', (e) => {
-                e.preventDefault();
-                showUserProfile();
-        });
-        // Subscription link
-        document.getElementById('subscriptionLink')?.addEventListener('click', (e) => {
-                e.preventDefault();
-                showUserSubscription();
-        });
-        // Logout button
-        document.getElementById('logoutBtn')?.addEventListener('click', (e) => {
-                e.preventDefault();
-                logout();
-        });
-        // Login form submission
-        document.getElementById('loginForm')?.addEventListener('submit', handleLogin);
-        // Register form submission
-        document.getElementById('registerForm')?.addEventListener('submit', handleRegister);
-        // Admin login form submission
-        document.getElementById('adminLoginForm')?.addEventListener('submit', handleAdminLogin);
 
-// Show user profile modal and fill details
-function showUserProfile() {
+    // Dashboard link
+    document.getElementById('dashboardLink')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        showModal('dashboardModal');
+    });
+    // Profile link
+    document.getElementById('profileLink')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        showUserProfile();
+    });
+    // Subscription link
+    document.getElementById('subscriptionLink')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        showUserSubscription();
+    });
+    // Logout button
+    document.getElementById('logoutBtn')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        logout();
+    });
+    // Login form submission
+    document.getElementById('loginForm')?.addEventListener('submit', handleLogin);
+    // Register form submission
+    document.getElementById('registerForm')?.addEventListener('submit', handleRegister);
+    // Admin login form submission
+    document.getElementById('adminLoginForm')?.addEventListener('submit', handleAdminLogin);
+
+    // Show user profile modal and fill details
+    function showUserProfile() {
         const user = JSON.parse(localStorage.getItem('currentUser'));
         if (!user) return;
         const html = `
@@ -481,32 +501,32 @@ function showUserProfile() {
         `;
         document.getElementById('profileDetails').innerHTML = html;
         showModal('profileModal');
-}
+    }
 
-// Show user subscription modal and fill details
-async function showUserSubscription() {
-    const user = JSON.parse(localStorage.getItem('currentUser'));
-    if (!user) return;
-    // Always show modal first and clear previous list
-    showModal('subscriptionModal');
-    document.getElementById('availablePackagesList').innerHTML = '<p style="color:#666;text-align:center;">Loading packages...</p>';
-    // User's current subscription
-    let subHtml = `<div class="dashboard-card">
+    // Show user subscription modal and fill details
+    async function showUserSubscription() {
+        const user = JSON.parse(localStorage.getItem('currentUser'));
+        if (!user) return;
+        // Always show modal first and clear previous list
+        showModal('subscriptionModal');
+        document.getElementById('availablePackagesList').innerHTML = '<p style="color:#666;text-align:center;">Loading packages...</p>';
+        // User's current subscription
+        let subHtml = `<div class="dashboard-card">
         <h3>Current Subscription</h3>
         <p><strong>Package:</strong> ${user.package_name || 'No Active Subscription'}</p>
         <p><strong>Status:</strong> <span class="status-badge ${user.subscription_status === 'active' ? 'active' : 'inactive'}">${user.subscription_status ? user.subscription_status.charAt(0).toUpperCase() + user.subscription_status.slice(1) : 'Inactive'}</span></p>
         <p><strong>Valid Until:</strong> ${user.valid_until ? new Date(user.valid_until).toLocaleDateString() : '-'}</p>
     </div>`;
-    document.getElementById('userSubscriptionDetails').innerHTML = subHtml;
-    // Fetch all available packages
-    try {
-        const res = await fetch('http://localhost:3000/api/packages');
-        const packages = await res.json();
-        if (!Array.isArray(packages) || packages.length === 0) {
-            document.getElementById('availablePackagesList').innerHTML = '<p style="color:#666;text-align:center;">No packages available.</p>';
-            return;
-        }
-        document.getElementById('availablePackagesList').innerHTML = packages.map(pkg => `
+        document.getElementById('userSubscriptionDetails').innerHTML = subHtml;
+        // Fetch all available packages
+        try {
+            const res = await fetch('http://localhost:3000/api/packages');
+            const packages = await res.json();
+            if (!Array.isArray(packages) || packages.length === 0) {
+                document.getElementById('availablePackagesList').innerHTML = '<p style="color:#666;text-align:center;">No packages available.</p>';
+                return;
+            }
+            document.getElementById('availablePackagesList').innerHTML = packages.map(pkg => `
             <div class="dashboard-card" style="margin-bottom:18px;">
                 <h4>${pkg.name} Package</h4>
                 <p><strong>Price:</strong> ₹${parseFloat(pkg.price).toLocaleString()}</p>
@@ -516,42 +536,42 @@ async function showUserSubscription() {
                 <span class="admin-badge ${pkg.is_active ? 'active' : 'inactive'}">${pkg.is_active ? 'Active' : 'Inactive'}</span>
             </div>
         `).join('');
-    } catch (error) {
-        document.getElementById('availablePackagesList').innerHTML = `<p style='color:red;text-align:center;'>Failed to load packages.</p>`;
+        } catch (error) {
+            document.getElementById('availablePackagesList').innerHTML = `<p style='color:red;text-align:center;'>Failed to load packages.</p>`;
+        }
     }
-}
-    
+
     // Forgot password form submission
     document.getElementById('forgotPasswordForm')?.addEventListener('submit', handleForgotPassword);
-    
+
     // Email verification form submission
     document.getElementById('verificationForm')?.addEventListener('submit', handleEmailVerification);
-    
+
     // Resend verification code
     document.getElementById('resendCodeLink')?.addEventListener('click', (e) => {
         e.preventDefault();
         resendVerificationCode();
     });
-    
+
     // Portfolio access control for portfolio section links
     // Do not override portfolio-btn click behavior; allow anchor tags to work normally
-    
+
     // Purchase package buttons
     const purchaseButtons = document.querySelectorAll('.purchase-package');
     purchaseButtons.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            
+
             if (!currentUser) {
                 alert('Please login to purchase a subscription package.');
                 showModal('loginModal');
                 return;
             }
-            
+
             const packageName = btn.getAttribute('data-package');
             const packagePrice = btn.getAttribute('data-price');
-            
+
             showPaymentModal(packageName, packagePrice);
         });
     });
@@ -577,7 +597,7 @@ function showLoginRequired(message = 'Log in first to view this.') {
 document.addEventListener('DOMContentLoaded', () => {
     // Protect all .portfolio-btn and .portfolio-btn, .portfolio-btn, .portfolio-grid .portfolio-btn
     document.querySelectorAll('.portfolio-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
+        btn.addEventListener('click', function (e) {
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
             if (!currentUser) {
                 e.preventDefault();
@@ -588,7 +608,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Protect all .purchase-package (dynamic pricing section)
     document.querySelectorAll('.purchase-package').forEach(btn => {
-        btn.addEventListener('click', function(e) {
+        btn.addEventListener('click', function (e) {
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
             if (!currentUser) {
                 e.preventDefault();
@@ -599,7 +619,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Protect all .info-btn (GET MORE INFO)
     document.querySelectorAll('.info-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
+        btn.addEventListener('click', function (e) {
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
             if (!currentUser) {
                 e.preventDefault();
@@ -610,7 +630,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Protect all .service-btn (MORE INFO in services)
     document.querySelectorAll('.service-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
+        btn.addEventListener('click', function (e) {
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
             if (!currentUser) {
                 e.preventDefault();
@@ -621,7 +641,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Protect Get In Touch (footer-cta and contact section)
     document.querySelectorAll('.cta-btn, .submit-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
+        btn.addEventListener('click', function (e) {
             // Only protect if it's a button that leads to contact or get in touch
             if (btn.textContent.toLowerCase().includes('get in touch')) {
                 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -637,7 +657,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.location.pathname.endsWith('about.html')) {
         const teamBtn = document.querySelector('.meet-team-btn');
         if (teamBtn) {
-            teamBtn.addEventListener('click', function(e) {
+            teamBtn.addEventListener('click', function (e) {
                 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
                 if (!currentUser) {
                     e.preventDefault();
@@ -669,16 +689,16 @@ function closeModal(modalId) {
 
 async function handleLogin(e) {
     e.preventDefault();
-    
+
     const email = e.target.querySelector('input[name="email"]').value;
     const password = e.target.querySelector('input[name="password"]').value;
-    
+
     try {
         const result = await apiCall('/auth/login', 'POST', { email, password });
-        
+
         localStorage.setItem('authToken', result.token);
         localStorage.setItem('currentUser', JSON.stringify(result.user));
-        
+
         closeModal('loginModal');
         await checkLoginStatus();
         alert(`Welcome back, ${result.user.fullName}!`);
@@ -690,7 +710,7 @@ async function handleLogin(e) {
 
 async function handleRegister(e) {
     e.preventDefault();
-    
+
     const formData = {
         fullName: e.target.querySelector('input[name="fullName"]').value,
         email: e.target.querySelector('input[name="email"]').value,
@@ -698,36 +718,36 @@ async function handleRegister(e) {
         password: e.target.querySelector('input[name="password"]').value,
         confirmPassword: e.target.querySelector('input[name="confirmPassword"]').value
     };
-    
+
     // Validate mobile number (10-15 digits only)
     const mobileRegex = /^[0-9]{10,15}$/;
     if (!mobileRegex.test(formData.mobile)) {
         alert('Please enter a valid mobile number (10-15 digits only, no spaces or special characters)');
         return;
     }
-    
+
     // Validate password match
     if (formData.password !== formData.confirmPassword) {
         alert('Passwords do not match!');
         return;
     }
-    
+
     // Validate password strength
     if (formData.password.length < 8) {
         alert('Password must be at least 8 characters long!');
         return;
     }
-    
+
     try {
         const result = await apiCall('/auth/register', 'POST', formData);
-        
+
         // Store email for verification
         localStorage.setItem('pendingEmail', formData.email);
-        
+
         closeModal('registerModal');
         document.getElementById('verificationEmail').textContent = formData.email;
         showModal('emailVerificationModal');
-        
+
         alert(`Registration successful! Verification code: ${result.verificationCode} (Check your email)`);
         e.target.reset();
     } catch (error) {
@@ -737,26 +757,26 @@ async function handleRegister(e) {
 
 async function handleEmailVerification(e) {
     e.preventDefault();
-    
+
     const enteredCode = e.target.querySelector('input[name="verificationCode"]').value;
     const email = localStorage.getItem('pendingEmail');
-    
+
     if (!email) {
         alert('No pending registration found. Please register again.');
         closeModal('emailVerificationModal');
         return;
     }
-    
+
     try {
         const result = await apiCall('/auth/verify-email', 'POST', {
             email: email,
             verificationCode: enteredCode
         });
-        
+
         localStorage.setItem('authToken', result.token);
         localStorage.setItem('currentUser', JSON.stringify(result.user));
         localStorage.removeItem('pendingEmail');
-        
+
         closeModal('emailVerificationModal');
         await checkLoginStatus();
         alert(`Email verified successfully! Welcome, ${result.user.fullName}!`);
@@ -768,12 +788,12 @@ async function handleEmailVerification(e) {
 
 async function resendVerificationCode() {
     const email = localStorage.getItem('pendingEmail');
-    
+
     if (!email) {
         alert('No pending registration found.');
         return;
     }
-    
+
     try {
         const result = await apiCall('/auth/resend-code', 'POST', { email });
         alert(`New verification code sent! Code: ${result.verificationCode} (Check your email)`);
@@ -794,15 +814,15 @@ function showPaymentModal(packageName, packagePrice) {
     const basePrice = parseInt(packagePrice);
     const gst = Math.round(basePrice * 0.18);
     const total = basePrice + gst;
-    
+
     document.getElementById('paymentPackage').textContent = packageName;
     document.getElementById('paymentPrice').textContent = `₹${basePrice.toLocaleString()}`;
     document.getElementById('paymentGST').textContent = `₹${gst.toLocaleString()}`;
     document.getElementById('paymentTotal').textContent = `₹${total.toLocaleString()}`;
-    
+
     // Store package info for payment processing
     window.currentPackage = { packageName, basePrice, gst, total };
-    
+
     showModal('paymentModal');
 }
 
@@ -817,21 +837,21 @@ function loadRazorpayScript() {
 async function initiatePayment(gateway) {
     const token = localStorage.getItem('authToken');
     const packageInfo = window.currentPackage;
-    
+
     if (!token || !packageInfo) {
         alert('Please login to purchase a subscription.');
         return;
     }
-    
+
     try {
         // Create Razorpay order
         const orderData = await apiCall('/payment/create-order', 'POST', {
             packageName: packageInfo.packageName,
             amount: packageInfo.total
         });
-        
+
         closeModal('paymentModal');
-        
+
         // Razorpay options
         const options = {
             key: orderData.keyId,
@@ -852,21 +872,21 @@ async function initiatePayment(gateway) {
                 color: '#E84855'
             },
             modal: {
-                ondismiss: function() {
+                ondismiss: function () {
                     showModal('paymentModal');
                 }
             }
         };
-        
+
         const rzp = new Razorpay(options);
-        
+
         rzp.on('payment.failed', function (response) {
             document.getElementById('paymentErrorMsg').textContent = response.error.description;
             showModal('paymentFailedModal');
         });
-        
+
         rzp.open();
-        
+
     } catch (error) {
         alert(error.message || 'Failed to initiate payment.');
         showModal('paymentModal');
@@ -882,26 +902,26 @@ async function verifyPayment(response, packageInfo) {
             packageName: packageInfo.packageName,
             amount: packageInfo.total
         });
-        
+
         // Update local user data
         const userData = await apiCall('/user/profile');
         localStorage.setItem('currentUser', JSON.stringify(userData));
         updateDashboardInfo(userData);
-        
+
         // Show success modal with receipt
         document.getElementById('receiptTxnId').textContent = response.razorpay_payment_id;
         document.getElementById('receiptPackage').textContent = packageInfo.packageName;
         document.getElementById('receiptAmount').textContent = `₹${packageInfo.total.toLocaleString()}`;
         document.getElementById('receiptDate').textContent = new Date().toLocaleString();
-        
+
         window.currentReceipt = {
             transactionId: response.razorpay_payment_id,
             packageName: packageInfo.packageName,
             amount: packageInfo.total
         };
-        
+
         showModal('paymentSuccessModal');
-        
+
     } catch (error) {
         document.getElementById('paymentErrorMsg').textContent = error.message;
         showModal('paymentFailedModal');
@@ -914,10 +934,10 @@ async function downloadReceipt() {
         alert('No receipt available.');
         return;
     }
-    
+
     try {
         const receiptData = await apiCall(`/payment/receipt/${receipt.transactionId}`);
-        
+
         const receiptContent = `
 PAYMENT RECEIPT
 =====================================
@@ -940,7 +960,7 @@ Thank you for your business!
 SatAns - Real World Designer
 =====================================
         `;
-        
+
         const blob = new Blob([receiptContent], { type: 'text/plain' });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -950,7 +970,7 @@ SatAns - Real World Designer
         a.click();
         document.body.removeChild(a);
         window.URL.revokeObjectURL(url);
-        
+
         alert('Receipt downloaded successfully!');
     } catch (error) {
         alert('Failed to download receipt.');
@@ -959,9 +979,9 @@ SatAns - Real World Designer
 
 async function handleForgotPassword(e) {
     e.preventDefault();
-    
+
     const email = e.target.querySelector('input[name="email"]').value;
-    
+
     try {
         await apiCall('/auth/forgot-password', 'POST', { email });
         alert('Password reset link has been sent to your email.');
@@ -974,13 +994,13 @@ async function handleForgotPassword(e) {
 
 async function handleAdminLogin(e) {
     e.preventDefault();
-    
+
     const email = e.target.querySelector('input[name="email"]').value;
     const password = e.target.querySelector('input[name="password"]').value;
-    
+
     try {
         const result = await apiCall('/auth/admin-login', 'POST', { email, password });
-        
+
         localStorage.setItem('adminToken', result.token);
         closeModal('adminLoginModal');
         await checkLoginStatus();
@@ -1042,12 +1062,12 @@ async function loadAdminSubscriptions() {
     try {
         const subscriptions = await apiCall('/admin/subscriptions');
         const container = document.getElementById('adminSubscriptionsList');
-        
+
         if (subscriptions.length === 0) {
             container.innerHTML = '<p style="color: #666; text-align: center; padding: 20px;">No active subscriptions.</p>';
             return;
         }
-        
+
         container.innerHTML = subscriptions.map(sub => `
             <div class="admin-list-item">
                 <h4>${sub.full_name}</h4>
@@ -1071,12 +1091,12 @@ async function loadAdminContacts() {
     try {
         const submissions = await apiCall('/admin/contacts');
         const container = document.getElementById('adminContactsList');
-        
+
         if (submissions.length === 0) {
             container.innerHTML = '<p style="color: #666; text-align: center; padding: 20px;">No contact form submissions yet.</p>';
             return;
         }
-        
+
         container.innerHTML = submissions.map(contact => `
             <div class="admin-list-item">
                 <h4>${contact.full_name}</h4>
@@ -1176,7 +1196,7 @@ async function loadAdminPortfolio() {
 function showCreatePortfolioForm() {
     const form = prompt('Enter portfolio details (format: title,description,image_url,category,project_url)');
     if (!form) return;
-    
+
     const [title, description, image_url, category, project_url] = form.split(',');
     createPortfolioItem({ title, description, image_url, category, project_url });
 }
@@ -1195,11 +1215,11 @@ async function editPortfolioItem(id) {
     // Simple prompt-based editing (can be enhanced with a modal)
     const title = prompt('Enter new title:');
     if (!title) return;
-    
+
     const description = prompt('Enter new description:');
     const category = prompt('Enter category:');
     const is_active = confirm('Is this item active?');
-    
+
     try {
         await apiCall(`/admin/portfolio/${id}`, 'PUT', {
             title,
@@ -1219,7 +1239,7 @@ async function editPortfolioItem(id) {
 
 async function deletePortfolioItem(id) {
     if (!confirm('Are you sure you want to delete this portfolio item?')) return;
-    
+
     try {
         await apiCall(`/admin/portfolio/${id}`, 'DELETE');
         alert('Portfolio item deleted successfully!');
@@ -1233,11 +1253,11 @@ async function deletePortfolioItem(id) {
 function showCreatePackageForm() {
     const name = prompt('Enter package name:');
     if (!name) return;
-    
+
     const price = parseFloat(prompt('Enter price (in rupees):'));
     const description = prompt('Enter description:');
     const features = prompt('Enter features (comma-separated):').split(',');
-    
+
     createPackage({ name, price, description, features, duration_days: 30 });
 }
 
@@ -1254,11 +1274,11 @@ async function createPackage(data) {
 async function editPackage(id) {
     const name = prompt('Enter new package name:');
     if (!name) return;
-    
+
     const price = parseFloat(prompt('Enter new price:'));
     const description = prompt('Enter new description:');
     const is_active = confirm('Is this package active?');
-    
+
     try {
         await apiCall(`/admin/packages/${id}`, 'PUT', {
             name,
@@ -1278,7 +1298,7 @@ async function editPackage(id) {
 
 async function deletePackage(id) {
     if (!confirm('Are you sure you want to delete this package?')) return;
-    
+
     try {
         await apiCall(`/admin/packages/${id}`, 'DELETE');
         alert('Package deleted successfully!');
@@ -1303,7 +1323,7 @@ function switchAdminTab(tabName) {
     // Hide all tabs
     document.querySelectorAll('.admin-tab').forEach(tab => tab.classList.remove('active'));
     document.querySelectorAll('.admin-tab-content').forEach(content => content.classList.remove('active'));
-    
+
     // Show selected tab
     document.querySelector(`[onclick="switchAdminTab('${tabName}')"]`).classList.add('active');
     document.getElementById(`admin${tabName.charAt(0).toUpperCase() + tabName.slice(1)}Tab`).classList.add('active');
@@ -1353,24 +1373,24 @@ if (carouselTrack) {
     carouselTrack.addEventListener('mouseenter', () => {
         carouselTrack.style.animationPlayState = 'paused';
     });
-    
+
     carouselTrack.addEventListener('mouseleave', () => {
         carouselTrack.style.animationPlayState = 'running';
     });
 }
 
 // Counter Animation for Stats
-const animateCounter = (element, target, duration = 2000) => {
+const animateCounter = (element, target, suffix, duration = 2000) => {
     let start = 0;
     const increment = target / (duration / 16);
-    
+
     const timer = setInterval(() => {
         start += increment;
         if (start >= target) {
-            element.textContent = target + '+';
+            element.textContent = target + suffix;
             clearInterval(timer);
         } else {
-            element.textContent = Math.floor(start) + '+';
+            element.textContent = Math.floor(start) + suffix;
         }
     }, 16);
 };
@@ -1383,8 +1403,10 @@ const statsObserver = new IntersectionObserver((entries) => {
             statNumbers.forEach(stat => {
                 const text = stat.textContent;
                 const number = parseInt(text.replace(/\D/g, ''));
-                stat.textContent = '0+';
-                animateCounter(stat, number);
+                // Extract suffix by removing all digits (e.g., "25K+" -> "K+")
+                const suffix = text.replace(/[0-9]/g, '');
+                stat.textContent = '0' + suffix;
+                animateCounter(stat, number, suffix);
             });
             statsObserver.unobserve(entry.target);
         }
@@ -1400,7 +1422,7 @@ if (statsSection) {
 window.addEventListener('scroll', () => {
     let current = '';
     const sections = document.querySelectorAll('section[id]');
-    
+
     sections.forEach(section => {
         const sectionTop = section.offsetTop;
         const sectionHeight = section.clientHeight;
@@ -1408,7 +1430,7 @@ window.addEventListener('scroll', () => {
             current = section.getAttribute('id');
         }
     });
-    
+
     document.querySelectorAll('.nav-links a').forEach(link => {
         link.classList.remove('active');
         if (link.getAttribute('href') === `#${current}`) {
@@ -1423,7 +1445,7 @@ const preloadImages = () => {
         'images/hero-person.png',
         'images/contact-person.png'
     ];
-    
+
     images.forEach(src => {
         const img = new Image();
         img.src = src;
@@ -1433,7 +1455,7 @@ const preloadImages = () => {
 // Initialize on page load
 window.addEventListener('load', () => {
     preloadImages();
-    
+
     // Remove initial loading class if you have one
     document.body.classList.add('loaded');
 });
@@ -1442,7 +1464,7 @@ window.addEventListener('load', () => {
 window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
     const heroImage = document.querySelector('.hero-image');
-    
+
     if (heroImage && scrolled < 800) {
         heroImage.style.transform = `translateY(${scrolled * 0.3}px)`;
     }
@@ -1463,7 +1485,7 @@ window.addEventListener('resize', () => {
 
 // Add loading state to buttons
 document.querySelectorAll('a[href^="#"], button[type="submit"]').forEach(button => {
-    button.addEventListener('click', function() {
+    button.addEventListener('click', function () {
         if (!this.classList.contains('loading')) {
             this.classList.add('loading');
             setTimeout(() => {
@@ -1474,3 +1496,36 @@ document.querySelectorAll('a[href^="#"], button[type="submit"]').forEach(button 
 });
 
 console.log('Website loaded successfully! 🚀');
+
+// Scroll Reveal Animation Observer
+document.addEventListener('DOMContentLoaded', () => {
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.15
+    });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+});
+
+// Scroll Reveal Animation Observer
+const revealElements = document.querySelectorAll('.reveal');
+
+const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            observer.unobserve(entry.target);
+        }
+    });
+}, {
+    threshold: 0.15
+});
+
+revealElements.forEach(el => revealObserver.observe(el));
