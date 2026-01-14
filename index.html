@@ -1,44 +1,21 @@
-        <!-- User Profile Modal -->
-        <div id="profileModal" class="modal">
-            <div class="modal-content dashboard-modal">
-                <span class="close-modal" data-modal="profileModal">&times;</span>
-                <h2>👤 My Profile</h2>
-                <div id="profileDetails">
-                    <!-- Filled by JS -->
-                </div>
-            </div>
-        </div>
 
-        <!-- Subscription Modal -->
-        <div id="subscriptionModal" class="modal">
-            <div class="modal-content dashboard-modal">
-                <span class="close-modal" data-modal="subscriptionModal">&times;</span>
-                <h2>💳 My Subscription</h2>
-                <div id="userSubscriptionDetails">
-                    <!-- Filled by JS -->
-                </div>
-                <h3 style="margin-top:32px; color:var(--primary-red);">Available Packages</h3>
-                <div id="availablePackagesList">
-                    <!-- Filled by JS -->
-                </div>
-            </div>
-        </div>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SatAns - Real World Designer</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=3.0">
+    <link rel="stylesheet" href="scroll-animations.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
-<body style="background: lightgray; opacity: 1; visibility: visible;">
+<body class="body-style">
     <!-- Decorative SVG Elements -->
-    <svg class="decorative-svg decorative-svg-1" width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:fixed;top:60px;left:40px;z-index:0;opacity:0.18;pointer-events:none;"><g stroke="#E84855" stroke-width="2"><rect x="10" y="10" width="40" height="40" rx="8"/><line x1="30" y1="0" x2="30" y2="60"/><line x1="0" y1="30" x2="60" y2="30"/></g></svg>
-    <svg class="decorative-svg decorative-svg-2" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:fixed;bottom:80px;right:60px;z-index:0;opacity:0.13;pointer-events:none;"><g stroke="#E84855" stroke-width="2"><circle cx="24" cy="24" r="18"/><line x1="24" y1="6" x2="24" y2="42"/><line x1="6" y1="24" x2="42" y2="24"/></g></svg>
-    <svg class="decorative-svg decorative-svg-3" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:fixed;top:50%;left:10vw;z-index:0;opacity:0.10;pointer-events:none;transform:translateY(-50%);"><g stroke="#E84855" stroke-width="2"><rect x="6" y="6" width="24" height="24" rx="6"/><line x1="18" y1="0" x2="18" y2="36"/><line x1="0" y1="18" x2="36" y2="18"/></g></svg>
+    <svg class="decorative-svg decorative-svg-1-style" width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><g stroke="#E84855" stroke-width="2"><rect x="10" y="10" width="40" height="40" rx="8"/><line x1="30" y1="0" x2="30" y2="60"/><line x1="0" y1="30" x2="60" y2="30"/></g></svg>
+    <svg class="decorative-svg decorative-svg-2-style" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><g stroke="#E84855" stroke-width="2"><circle cx="24" cy="24" r="18"/><line x1="24" y1="6" x2="24" y2="42"/><line x1="6" y1="24" x2="42" y2="24"/></g></svg>
+    <svg class="decorative-svg decorative-svg-3-style" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><g stroke="#E84855" stroke-width="2"><rect x="6" y="6" width="24" height="24" rx="6"/><line x1="18" y1="0" x2="18" y2="36"/><line x1="0" y1="18" x2="36" y2="18"/></g></svg>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
@@ -49,25 +26,27 @@
                 <li><a href="#home">HOME</a></li>
                 <li><a href="about.html">ABOUT US</a></li>
                 <li><a href="#contact">CONTACT US</a></li>
-                <li id="portfolioNavItem"><a href="#" id="portfolioLink">PORTFOLIO</a></li>
             </ul>
             <div class="auth-buttons">
-                <a href="#admin" class="admin-btn" id="adminBtn">👨‍💼 ADMIN</a>
+                <button class="dark-mode-toggle" id="darkModeToggle" title="Toggle Dark Mode">
+                    <span class="sun-icon">☀️</span>
+                    <span class="moon-icon">🌙</span>
+                </button>
+                <a href="#admin" class="admin-btn" id="adminBtn">ADMIN</a>
                 <a href="#login" class="login-btn" id="loginBtn">LOGIN / REGISTER</a>
                 <div class="user-menu" id="userMenu" style="display: none;">
                     <button class="user-btn" id="userBtn">
-                        <span class="user-icon">👤</span>
                         <span id="userName">User</span>
                     </button>
                     <div class="dropdown-menu" id="dropdownMenu">
-                        <a href="#dashboard" id="dashboardLink">📊 Dashboard</a>
-                        <a href="#profile" id="profileLink">👤 My Profile</a>
-                        <a href="#subscription" id="subscriptionLink">💳 Subscription</a>
-                        <a href="#logout" id="logoutBtn">🚪 Logout</a>
+                        <a href="#dashboard" id="dashboardLink">Dashboard</a>
+                        <a href="#profile" id="profileLink">My Profile</a>
+                        <a href="#subscription" id="subscriptionLink">Subscription</a>
+                        <a href="#logout" id="logoutBtn">Logout</a>
                     </div>
                 </div>
-                <a href="#adminPanel" id="adminPanelBtn" class="admin-panel-btn" style="display:none; margin-left:16px; background:linear-gradient(135deg,#e84855,#f86680);color:#fff;border:none;border-radius:50px;padding:10px 28px;font-weight:700;box-shadow:0 2px 8px rgba(232,72,85,0.10);text-decoration:none;">🛠 Admin Panel</a>
-                <button id="adminLogoutBtn" class="admin-logout-btn" style="display:none; margin-left:8px; background:linear-gradient(135deg,#e84855,#f86680);color:#fff;border:none;border-radius:50px;padding:10px 28px;font-weight:700;box-shadow:0 2px 8px rgba(232,72,85,0.10);cursor:pointer;">🚪 Admin Logout</button>
+                <a href="#adminPanel" id="adminPanelBtn" class="admin-panel-btn btn-admin-panel" style="display:none;">Admin Panel</a>
+                <button id="adminLogoutBtn" class="admin-logout-btn btn-admin-logout" style="display:none;">Admin Logout</button>
             </div>
             <div class="hamburger">
                 <span></span>
@@ -78,16 +57,16 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="hero">
+    <section id="home" class="hero reveal">
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
                     <p class="hero-subtitle">YOUR PRODUCTION IS HERE</p>
-                    <h1 class="hero-title">WE ARE THE REAL WORLD <span>DESIGNER</span></h1>
+                    <h1 class="hero-title">WE ARE THE REAL WORLD <span class="animated-text"><span class="letter" style="animation-delay: 0.3s">D</span><span class="letter" style="animation-delay: 0.5s">E</span><span class="letter" style="animation-delay: 0.7s">S</span><span class="letter" style="animation-delay: 0.9s">I</span><span class="letter" style="animation-delay: 1.1s">G</span><span class="letter" style="animation-delay: 1.3s">N</span><span class="letter" style="animation-delay: 1.5s">E</span><span class="letter" style="animation-delay: 1.7s">R</span></span></h1>
                     <p class="hero-description">Transform your brand with stunning designs and strategic marketing solutions. Get customers, make sales, and scale your business!</p>
                     <div class="hero-buttons">
-                        <a href="#contact" class="cta-btn primary">Contact Us <span class="arrow">→</span></a>
-                        <a href="https://satansportfolio.my.canva.site/portfolio1" class="cta-btn secondary">VIEW OUR WORK</a>
+                        <a href="#contact" class="cta-btn primary">Contact Us <span class="arrow">&#8594;</span></a>
+                        <a href="https://satansportfolio.my.canva.site/portfolio1" class="cta-btn secondary" target="_blank">VIEW OUR WORK</a>
                     </div>
                     
                 </div>
@@ -95,7 +74,7 @@
                     <img src="images/hero-person.png" alt="Designer with laptop">
                 </div>
             </div>
-            <div class="decorative-element">✦</div>
+            <!-- Decorative element removed -->
         </div>
     </section>
 
@@ -104,15 +83,15 @@
         <div class="container">
             <div class="decorative-line"></div>
             <div class="stats-content">
-                <div class="stat-box">
-                    <h2 class="stat-number">5+</h2>
+                <div class="stat-item-card">
+                    <h2 class="stat-number">5 +</h2>
                     <p class="stat-label">YEARS OF EXPERIENCE</p>
                 </div>
-                <div class="stat-box">
-                    <h2 class="stat-number">25K+</h2>
+                <div class="stat-item-card">
+                    <h2 class="stat-number"> 25 K + </h2>
                     <p class="stat-label">PROJECTS COMPLETED</p>
                 </div>
-                <div class="stat-info">
+                <div class="stat-info-text">
                     <p>In a world where ideas are the new superpowers, one studio dares to bring brands to life like never before. Branding Studios isn't just yet a creative agency — it's a universe of storytelling, strategy, and stunning design.</p>
                     <a href="#about" class="info-btn">GET MORE INFO <span class="arrow">→</span></a>
                 </div>
@@ -143,7 +122,7 @@
     </section>
 
     <!-- Services Section -->
-    <section class="services">
+    <section class="services reveal">
         <div class="container">
             <div class="section-header">
                 <h2>OUR<br>QUALITY SERVICES</h2>
@@ -186,7 +165,7 @@
     </section>
 
     <!-- Portfolio Section -->
-    <section class="portfolio">
+    <section class="portfolio reveal">
         <div class="container">
             <h2 class="section-title">PORTFOLIO</h2>
             <div class="portfolio-grid">
@@ -415,12 +394,14 @@
                 </nav>
             </div>
             <div class="footer-copyright-box">
-                <p>Copyright 2025 Satans production. All Rights Reserved</p><br>
+                <p>© 2025 Satans Production. All Rights Reserved</p>
             </div>
         </div>
         <div class="footer-credits">
-            <span>Developed by : Medha Jha, Golu Kumar</span>
-            <span> and Designed by: Satyam Sharma</span>
+            <span>Developed by <a href="https://www.linkedin.com/in/medha-jha810/" target="_blank">Medha Jha</a> & <a href="https://www.linkedin.com/in/golukumar15/" target="_blank">Golu Kumar</a></span>
+            <span>Designed by <a href="https://www.linkedin.com/in/satyam-babu-/" target="_blank">Satyam Sharma</a></span>
+            <span>|</span>
+            <span><a href="mailto:satansproduction@gmail.com" target="_blank">satansproduction@gmail.com</a></span>
         </div>
     </footer>
 
@@ -722,6 +703,33 @@
         </div>
     </div>
 
+    <!-- User Profile Modal -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content dashboard-modal">
+            <span class="close-modal" data-modal="profileModal">&times;</span>
+            <h2>My Profile</h2>
+            <div id="profileDetails">
+                <!-- Filled by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Subscription Modal -->
+    <div id="subscriptionModal" class="modal">
+        <div class="modal-content dashboard-modal">
+            <span class="close-modal" data-modal="subscriptionModal">&times;</span>
+            <h2>My Subscription</h2>
+            <div id="userSubscriptionDetails">
+                <!-- Filled by JS -->
+            </div>
+            <h3 style="margin-top:32px; color:var(--primary-red);">Available Packages</h3>
+            <div id="availablePackagesList">
+                <!-- Filled by JS -->
+            </div>
+        </div>
+    </div>
+
+    <script src="scroll-reveal.js?v=1.0"></script>
     <script src="script.js"></script>
 </body>
 </html>
