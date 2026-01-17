@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('userSubscriptionDetails').innerHTML = '';
         document.getElementById('availablePackagesList').innerHTML = '<p style="color:#666;text-align:center;">Loading packages...</p>';
         try {
-            const res = await fetch('http://localhost:3000/api/packages');
+            const res = await fetch('/api/packages');
             const packages = await res.json();
             if (!Array.isArray(packages) || packages.length === 0) {
                 document.getElementById('availablePackagesList').innerHTML = '<p style="color:#666;text-align:center;">No packages available.</p>';
@@ -75,7 +75,7 @@ if (dashboardViewPackagesBtn) {
         if (list) {
             list.innerHTML = '<p style="color:#666;text-align:center;">Loading packages...</p>';
             try {
-                const res = await fetch('http://localhost:3000/api/packages');
+                const res = await fetch('/api/packages');
                 const packages = await res.json();
                 if (!Array.isArray(packages) || packages.length === 0) {
                     list.innerHTML = '<p style="color:#666;text-align:center;">No packages available.</p>';
@@ -188,7 +188,7 @@ async function renderDynamicPricing() {
     const grid = document.getElementById('dynamicPricingGrid');
     if (!grid) return;
     try {
-        const res = await fetch('http://localhost:3000/api/packages');
+        const res = await fetch('/api/packages');
         const packages = await res.json();
         if (!Array.isArray(packages) || packages.length === 0) {
             grid.innerHTML = '<p style="color:#666;text-align:center;">No packages available.</p>';
@@ -256,7 +256,7 @@ document.getElementById('adminLogoutBtn')?.addEventListener('click', function ()
 });
 
 // API Base URL
-const API_URL = 'http://localhost:3000/api';
+const API_URL = '/api';
 
 // Helper function for API calls
 async function apiCall(endpoint, method = 'GET', data = null) {
@@ -520,7 +520,7 @@ function initializeAuthSystem() {
         document.getElementById('userSubscriptionDetails').innerHTML = subHtml;
         // Fetch all available packages
         try {
-            const res = await fetch('http://localhost:3000/api/packages');
+            const res = await fetch('/api/packages');
             const packages = await res.json();
             if (!Array.isArray(packages) || packages.length === 0) {
                 document.getElementById('availablePackagesList').innerHTML = '<p style="color:#666;text-align:center;">No packages available.</p>';
