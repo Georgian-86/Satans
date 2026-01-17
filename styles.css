@@ -5020,3 +5020,220 @@ body.dark-mode .connect-btn:hover {
         transform: none;
     }
 }
+
+/* ===================================
+   MODERN PRICING SECTION
+   =================================== */
+.pricing {
+    padding: 100px 20px;
+    background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+    position: relative;
+}
+
+.pricing .section-title {
+    text-align: center;
+    margin-bottom: 60px;
+    font-size: 3.5rem;
+    line-height: 1.2;
+}
+
+.pricing .section-title .blue {
+    background: linear-gradient(135deg, #4A90E2, #5BA3F5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.pricing .section-title .red {
+    background: linear-gradient(135deg, #E84855, #EF476F);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.pricing-card {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 40px 32px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 2px solid transparent;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.pricing-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #E84855, #EF476F, #E84855);
+    background-size: 200% 100%;
+    animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.pricing-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(232, 72, 85, 0.3);
+    box-shadow: 0 20px 40px rgba(232, 72, 85, 0.15),
+                0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.pricing-header {
+    text-align: center;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.package-label {
+    font-size: 14px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.package-type {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #E84855;
+    margin: 0;
+    font-family: var(--font-heading);
+}
+
+.pricing-price {
+    text-align: center;
+    margin-bottom: 32px;
+    font-size: 3rem;
+    font-weight: 900;
+    color: #1A1A1A;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 8px;
+}
+
+.pricing-price .currency {
+    font-size: 2rem;
+    color: #E84855;
+}
+
+.pricing-price .period {
+    font-size: 1rem;
+    color: #999;
+    font-weight: 400;
+}
+
+.pricing-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 32px 0;
+}
+
+.pricing-features li {
+    padding: 12px 0;
+    color: #555;
+    font-size: 15px;
+    position: relative;
+    padding-left: 30px;
+    line-height: 1.6;
+}
+
+.pricing-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #E84855;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.pricing-btn {
+    display: block;
+    width: 100%;
+    padding: 16px 32px;
+    background: linear-gradient(135deg, #E84855, #EF476F);
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(232, 72, 85, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.pricing-btn:hover {
+    background: linear-gradient(135deg, #d63447, #E84855);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(232, 72, 85, 0.4);
+    color: #fff;
+    text-decoration: none;
+}
+
+.pricing-btn .arrow {
+    margin-left: 8px;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.pricing-btn:hover .arrow {
+    transform: translateX(5px);
+}
+
+/* Featured Package Highlight */
+.pricing-card:nth-child(2) {
+    border-color: #E84855;
+    box-shadow: 0 8px 30px rgba(232, 72, 85, 0.2);
+}
+
+.pricing-card:nth-child(2)::before {
+    height: 6px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .pricing {
+        padding: 60px 20px;
+    }
+    
+    .pricing .section-title {
+        font-size: 2.5rem;
+        margin-bottom: 40px;
+    }
+    
+    .pricing-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    
+    .pricing-card {
+        padding: 32px 24px;
+    }
+    
+    .pricing-price {
+        font-size: 2.5rem;
+    }
+}
+
+
