@@ -1,0 +1,735 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SatAns - Real World Designer</title>
+    <link rel="stylesheet" href="styles.css?v=3.0">
+    <link rel="stylesheet" href="scroll-animations.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="body-style">
+    <!-- Decorative SVG Elements -->
+    <svg class="decorative-svg decorative-svg-1-style" width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><g stroke="#E84855" stroke-width="2"><rect x="10" y="10" width="40" height="40" rx="8"/><line x1="30" y1="0" x2="30" y2="60"/><line x1="0" y1="30" x2="60" y2="30"/></g></svg>
+    <svg class="decorative-svg decorative-svg-2-style" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><g stroke="#E84855" stroke-width="2"><circle cx="24" cy="24" r="18"/><line x1="24" y1="6" x2="24" y2="42"/><line x1="6" y1="24" x2="42" y2="24"/></g></svg>
+    <svg class="decorative-svg decorative-svg-3-style" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><g stroke="#E84855" stroke-width="2"><rect x="6" y="6" width="24" height="24" rx="6"/><line x1="18" y1="0" x2="18" y2="36"/><line x1="0" y1="18" x2="36" y2="18"/></g></svg>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <img src="images/logo.png" alt="SatAns Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">HOME</a></li>
+                <li><a href="about.html">ABOUT US</a></li>
+                <li><a href="#contact">CONTACT US</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <button class="dark-mode-toggle" id="darkModeToggle" title="Toggle Dark Mode">
+                    <span class="sun-icon">☀️</span>
+                    <span class="moon-icon">🌙</span>
+                </button>
+                <a href="#admin" class="admin-btn" id="adminBtn">ADMIN</a>
+                <a href="#login" class="login-btn" id="loginBtn">LOGIN / REGISTER</a>
+                <div class="user-menu" id="userMenu" style="display: none;">
+                    <button class="user-btn" id="userBtn">
+                        <span id="userName">User</span>
+                    </button>
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <a href="#dashboard" id="dashboardLink">Dashboard</a>
+                        <a href="#profile" id="profileLink">My Profile</a>
+                        <a href="#subscription" id="subscriptionLink">Subscription</a>
+                        <a href="#logout" id="logoutBtn">Logout</a>
+                    </div>
+                </div>
+                <a href="#adminPanel" id="adminPanelBtn" class="admin-panel-btn btn-admin-panel" style="display:none;">Admin Panel</a>
+                <button id="adminLogoutBtn" class="admin-logout-btn btn-admin-logout" style="display:none;">Admin Logout</button>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero reveal">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <p class="hero-subtitle">YOUR PRODUCTION IS HERE</p>
+                    <h1 class="hero-title">WE ARE THE REAL WORLD <span class="animated-text"><span class="letter" style="animation-delay: 0.3s">D</span><span class="letter" style="animation-delay: 0.5s">E</span><span class="letter" style="animation-delay: 0.7s">S</span><span class="letter" style="animation-delay: 0.9s">I</span><span class="letter" style="animation-delay: 1.1s">G</span><span class="letter" style="animation-delay: 1.3s">N</span><span class="letter" style="animation-delay: 1.5s">E</span><span class="letter" style="animation-delay: 1.7s">R</span></span></h1>
+                    <p class="hero-description">Transform your brand with stunning designs and strategic marketing solutions. Get customers, make sales, and scale your business!</p>
+                    <div class="hero-buttons">
+                        <a href="#contact" class="cta-btn primary">Contact Us <span class="arrow">&#8594;</span></a>
+                        <a href="https://satansportfolio.my.canva.site/portfolio1" class="cta-btn secondary" target="_blank">VIEW OUR WORK</a>
+                    </div>
+                    
+                </div>
+                <div class="hero-image">
+                    <img src="images/hero-person.png" alt="Designer with laptop">
+                </div>
+            </div>
+            <!-- Decorative element removed -->
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="decorative-line"></div>
+            <div class="stats-content">
+                <div class="stat-item-card">
+                    <h2 class="stat-number">5 +</h2>
+                    <p class="stat-label">YEARS OF EXPERIENCE</p>
+                </div>
+                <div class="stat-item-card">
+                    <h2 class="stat-number"> 25 K + </h2>
+                    <p class="stat-label">PROJECTS COMPLETED</p>
+                </div>
+                <div class="stat-info-text">
+                    <p>In a world where ideas are the new superpowers, one studio dares to bring brands to life like never before. Branding Studios isn't just yet a creative agency — it's a universe of storytelling, strategy, and stunning design.</p>
+                    <a href="#about" class="info-btn">GET MORE INFO <span class="arrow">→</span></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Badges / Client Logos -->
+    <section class="trust-badges">
+        <div class="container">
+            <p class="trust-text">TRUSTED BY 80+ LEADING BRANDS WORLDWIDE</p>
+            <div class="badges-marquee">
+                <div class="badges-track">
+                    <img src="images/brands/meta.png" alt="Meta">
+                    <img src="images/brands/google-partner.png" alt="Google">
+                    <img src="images/brands/facebook.png" alt="Facebook">
+                    <img src="images/brands/instagram.png" alt="Instagram">
+                    <img src="images/brands/wordpress.png" alt="WordPress">
+                    <img src="images/brands/Linkedin.png" alt="LinkedIn">
+                    <!-- Duplicate for seamless loop -->
+                    <img src="images/brands/meta.png" alt="Meta">
+                    <img src="images/brands/google-partner.png" alt="Google">
+                    <img src="images/brands/facebook.png" alt="Facebook">
+                    <img src="images/brands/instagram.png" alt="Instagram">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services reveal">
+        <div class="container">
+            <div class="section-header">
+                <h2>OUR<br>QUALITY SERVICES</h2>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="images/icons/social-media.png" alt="Social Media">
+                    </div>
+                    <h3>SOCIAL<br>MEDIA<br>MARKETING</h3>
+                    <p>Hassle-free social success! While you focus on your business, we'll ensure your brand shines across all social platforms.</p>
+                        <a href="detailed-report.html" class="service-btn">MORE INFO <span class="arrow">→</span></a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="images/icons/creative.png" alt="Creative">
+                    </div>
+                    <h3>CREATIVE<br>DESIGN</h3>
+                    <p>Picture-perfect branding and graphics - we make your competitors jealous, and your audience adore you.</p>
+                        <a href="detailed-report.html" class="service-btn">MORE INFO <span class="arrow">→</span></a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="images/icons/seo.png" alt="SEO">
+                    </div>
+                    <h3>LOCAL<br>SEO</h3>
+                    <p>Boost your online swagger! We'll spruce up your listings so your brand has no choice but to be your biggest fan.</p>
+                        <a href="detailed-report.html" class="service-btn">MORE INFO <span class="arrow">→</span></a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="images/icons/web-design.png" alt="Web Design">
+                    </div>
+                    <h3>WEB DESIGN/<br>MANAGEMENT</h3>
+                    <p>Elevate your brand with our creative and informative website. Take it to the next level.</p>
+                        <a href="detailed-report.html" class="service-btn">MORE INFO <span class="arrow">→</span></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio reveal">
+        <div class="container">
+            <h2 class="section-title">PORTFOLIO</h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <div class="portfolio-header">
+                        <div class="portfolio-icon">
+                            <img src="images/p1.png" alt="">
+                        </div>
+                        <h3>SOCIAL MEDIA &<br>DIGITAL MEDIA<br>DESIGNS</h3>
+                    </div>
+                    <ul>
+                        <li>Social Media Design</li>
+                        <li>Website Designs</li>
+                        <li>Advertisement Designs</li>
+                        <li>Brand designs</li>
+                    </ul>
+                    <a href="https://satansportfolio.my.canva.site/portfolio1" target="_blank" class="portfolio-btn">SEE DESIGNS <span class="arrow">→</span></a>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-header">
+                        <div class="portfolio-icon">
+                            <img src="images/p2.png" alt="">
+                        </div>
+                        <h3>WEBSITE<br>DEVELOPMENT</h3>
+                    </div>
+                    <ul>
+                        <li>e-Business Website</li>
+                        <li>School /College website</li>
+                        <li>E-Commerce Website</li>
+                        <li>Portfolio website</li>
+                    </ul>
+                    <a href="https://satansportfolio.my.canva.site/portfolio1" target="_blank" class="portfolio-btn">SEE DESIGNS <span class="arrow">→</span></a>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-header">
+                        <div class="portfolio-icon">
+                            <img src="images/p3.png" alt="">
+                        </div>
+                        <h3>EVENT DESIGNS<br>& PRINTABLE<br>DESIGNS</h3>
+                    </div>
+                    <ul>
+                        <li>Printable banners</li>
+                        <li>Printable Posters</li>
+                        <li>Printable books</li>
+                        <li>Printable Cards</li>
+                    </ul>
+                    <a href="https://satansportfolio.my.canva.site/portfolio1" target="_blank" class="portfolio-btn">SEE DESIGNS <span class="arrow">→</span></a>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-header">
+                        <div class="portfolio-icon">
+                            <img src="images/p4.png" alt="">
+                        </div>
+                        <h3>WEDDING<br>PHOTOGRAPHY</h3>
+                    </div>
+                    <ul>
+                        <li>Full shoot</li>
+                        <li>Photography</li>
+                        <li>Product design</li>
+                        <li>Printable Ads</li>
+                    </ul>
+                    <a href="https://satansportfolio.my.canva.site/portfolio1" target="_blank" class="portfolio-btn">SEE DESIGNS <span class="arrow">→</span></a>
+                </div>
+                <div class="portfolio-item large">
+                    <div class="portfolio-header">
+                        <div class="portfolio-icon">
+                            <img src="images/p5.png" alt="">
+                        </div>
+                        <h3>BRANDING, BRAND DESIGN, BRAND<br>IDENTITY, BRAND STRATEGIES, PACKAGING<br>DESIGNS & PRODUCT DESIGN</h3>
+                    </div>
+                    <div class="branding-columns">
+                        <ul>
+                            <li>Logo</li>
+                            <li>Logo Pattern</li>
+                            <li>Brand pattern</li>
+                            <li>Brand colours</li>
+                            <li>Printable Ads</li>
+                        </ul>
+                        <ul>
+                            <li>Strategies</li>
+                            <li>Brand Development</li>
+                            <li>Packaging</li>
+                            <li>Product design</li>
+                        </ul>
+                    </div>
+                    <a href="https://satansportfolio.my.canva.site/portfolio1" target="_blank" class="portfolio-btn">SEE DESIGNS <span class="arrow">→</span></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills">
+        <div class="container">
+            <h2 class="section-title white">OUR TOP SKILLS</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <img src="images/skill1.png" alt="">
+                    </div>
+                    <h3>DESIGNING</h3>
+                    <ul>
+                        <li>Brand Design</li>
+                        <li>Social Media Design</li>
+                        <li>Dashboard Design</li>
+                        <li>Profile Design</li>
+                        <li>Creatives</li>
+                        <li>Ads Design</li>
+                        <li>Event Designs</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <img src="images/skill2.png" alt="">
+                    </div>
+                    <h3>TECHNICAL</h3>
+                    <ul>
+                        <li>Brand Strategy</li>
+                        <li>Social Media Strategy</li>
+                        <li>Event Designing Strategy</li>
+                        <li>Event Style</li>
+                        <li>Event Management</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <img src="images/skill3.png" alt="">
+                    </div>
+                    <h3>MARKETING</h3>
+                    <ul>
+                        <li>Email marketing</li>
+                        <li>Social media marketing</li>
+                        <li>Search Engine Marketing</li>
+                        <li>Paid search</li>
+                        <li>Content marketing</li>
+                        <li>Affiliate marketing</li>
+                        <li>Digital marketing</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brands Section -->
+    <section class="brands">
+        <div class="container">
+            <h2 class="section-title">WITH THE WORLD PREMIER<br><span class="highlight">80+ BRANDS</span></h2>
+            <div class="brands-grid">
+                <img src="images/brands/meta.png" alt="Meta Business Partner">
+                <img src="images/brands/google-partner.png" alt="Google Partner">
+                <img src="images/brands/instagram.png" alt="Instagram">
+                <img src="images/brands/facebook.png" alt="Facebook">
+                <img src="images/brands/google-mybusiness.png" alt="Google My Business">
+                <img src="images/brands/google-cloud.png" alt="Google Cloud">
+                <img src="images/brands/wordpress.png" alt="WordPress">
+                <img src="images/brands/Linkedin.png" alt="LinkedIn">
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing">
+        <div class="container">
+            <h2 class="section-title">The <span class="blue">best pricing plans</span> <span class="red">to<br>get your best</span></h2>
+            <div class="pricing-grid" id="dynamicPricingGrid">
+                <!-- Packages will be loaded here by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="contact-wrapper">
+                <h2 class="contact-title">LET'S CONNECT</h2>
+                <form class="contact-form" id="contactForm">
+                    <input type="text" name="fullName" placeholder="Full Name*" required>
+                    <div class="form-row">
+                        <input type="email" name="email" placeholder="Email Address*" required>
+                        <input type="tel" name="mobile" placeholder="Mobile Number*" required>
+                    </div>
+                    <select name="service" required>
+                        <option value="">Select Service Required*</option>
+                        <option value="Branding">Branding</option>
+                        <option value="Brand Identity">Brand Identity</option>
+                        <option value="Brand Strategy">Brand Strategy</option>
+                        <option value="Packaging Design">Packaging Design</option>
+                        <option value="Product Design">Product Design</option>
+                        <option value="Social Media Marketing">Social Media Marketing</option>
+                        <option value="Web Design">Web Design</option>
+                        <option value="SEO Services">SEO Services</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <textarea name="message" placeholder="Tell Us About Your Project/Requirements*" rows="5" required></textarea>
+                    <button type="submit" class="submit-btn">Get In Touch <span class="arrow">▶</span></button>
+                </form>
+                <div class="contact-image">
+                    <img src="images/contact-person.png" alt="Contact">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <section class="footer-cta">
+        <div class="container">
+            <h2>Hello👋 We'are available to<br>Grow your Business</h2>
+            <a href="#contact" class="cta-btn">Get In Touch <span class="arrow">▶</span></a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-card">
+            <div class="footer-logo-nav">
+                <div class="footer-logo">
+                    <img src="images/logo.png" alt="SatAns Logo" style="height:70px; margin-bottom:10px;">
+                </div>
+                <nav class="footer-nav">
+                    <a href="https://satansportfolio.my.canva.site/portfolio1">SERVICES</a>
+                    <a href="https://www.behance.net/satyamsharma66" id="footerPortfolioBtn">PORTFOLIO</a>
+                    <a href="about.html">WHY US?</a>
+                    <a href="#" id="footerPricingBtn">PRICING</a>
+                    <a href="#contact">CONTACT</a>
+                    <a href="#" id="footerLoginBtn">LOGIN</a>
+                </nav>
+            </div>
+            <div class="footer-copyright-box">
+                <p>© 2025 Satans Production. All Rights Reserved</p>
+            </div>
+        </div>
+        <div class="footer-credits">
+            <span>Developed by <a href="https://www.linkedin.com/in/medha-jha810/" target="_blank">Medha Jha</a> & <a href="https://www.linkedin.com/in/golukumar15/" target="_blank">Golu Kumar</a></span>
+            <span>Designed by <a href="https://www.linkedin.com/in/satyam-babu-/" target="_blank">Satyam Sharma</a></span>
+            <span>|</span>
+            <span><a href="mailto:satansproduction@gmail.com" target="_blank">satansproduction@gmail.com</a></span>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="loginModal">&times;</span>
+            <h2>Welcome Back!</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" name="email" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" required placeholder="Enter your password">
+                </div>
+                <button type="submit" class="modal-btn">Login</button>
+                <p class="modal-footer">
+                    <a href="#" id="forgotPasswordLink">Forgot Password?</a>
+                    <span>Don't have an account? <a href="#" id="showRegisterModal">Register here</a></span>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="registerModal">&times;</span>
+            <h2>Create Your Account</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" name="fullName" required placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" name="email" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label>Mobile Number</label>
+                    <input type="tel" name="mobile" required placeholder="Enter your mobile number">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" required placeholder="Create a password" minlength="8">
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" name="confirmPassword" required placeholder="Confirm your password">
+                </div>
+                <button type="submit" class="modal-btn">Register</button>
+                <p class="modal-footer">
+                    Already have an account? <a href="#" id="showLoginModal">Login here</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- User Dashboard Modal -->
+    <div id="dashboardModal" class="modal">
+        <div class="modal-content dashboard-content">
+            <span class="close-modal" data-modal="dashboardModal">&times;</span>
+            <h2>📊 My Dashboard</h2>
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <h3>👤 Personal Details</h3>
+                    <div class="detail-row">
+                        <span>Name:</span>
+                        <strong id="dashName">-</strong>
+                    </div>
+                    <div class="detail-row">
+                        <span>Email:</span>
+                        <strong id="dashEmail">-</strong>
+                    </div>
+                    <div class="detail-row">
+                        <span>Mobile:</span>
+                        <strong id="dashMobile">-</strong>
+                    </div>
+                </div>
+                <div class="dashboard-card">
+                    <h3>💳 Subscription Status</h3>
+                    <div class="detail-row">
+                        <span>Package:</span>
+                        <strong id="dashPackage">No Active Subscription</strong>
+                    </div>
+                    <div class="detail-row">
+                        <span>Status:</span>
+                        <strong id="dashStatus" class="status-badge">Inactive</strong>
+                    </div>
+                    <div class="detail-row">
+                        <span>Valid Until:</span>
+                        <strong id="dashValidity">-</strong>
+                    </div>
+                    <button class="modal-btn" id="dashboardViewPackagesBtn">View Packages</button>
+                    <div id="dashboardPackagesCard" style="width:100%;margin-top:24px;">
+                        <h3 style="color:var(--primary-red);text-align:left;">Available Packages</h3>
+                        <div id="dashboardPackagesList" style="margin-top:12px;"></div>
+                    </div>
+                </div>
+                <div class="dashboard-card full-width">
+                    <h3>📞 Connect with Team</h3>
+                    <p>Need help? Our team is here to assist you!</p>
+                    <div class="connect-buttons">
+                            <button class="connect-team-btn" onclick="window.location.href='connect.html'">📞 Connect with Team</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Gateway Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content payment-content">
+            <span class="close-modal" data-modal="paymentModal">&times;</span>
+            <h2>💳 Complete Your Purchase</h2>
+            <div class="payment-summary">
+                <h3>Order Summary</h3>
+                <div class="summary-row">
+                    <span>Package:</span>
+                    <strong id="paymentPackage">-</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Base Price:</span>
+                    <strong id="paymentPrice">₹0</strong>
+                </div>
+                <div class="summary-row">
+                    <span>GST (18%):</span>
+                    <strong id="paymentGST">₹0</strong>
+                </div>
+                <div class="summary-row total">
+                    <span>Total Amount:</span>
+                    <strong id="paymentTotal">₹0</strong>
+                </div>
+            </div>
+            <div class="payment-methods">
+                <h3>Select Payment Method</h3>
+                <button class="payment-method-btn" onclick="initiatePayment('razorpay')">
+                    <img src="https://razorpay.com/assets/razorpay-glyph.svg" alt="Razorpay" style="height: 24px;">
+                    Pay with Razorpay
+                </button>
+                <button class="payment-method-btn" onclick="initiatePayment('stripe')">
+                    <img src="https://stripe.com/img/v3/home/twitter.png" alt="Stripe" style="height: 24px;">
+                    Pay with Stripe
+                </button>
+            </div>
+            <p class="payment-note">🔒 All transactions are secure and encrypted</p>
+        </div>
+    </div>
+
+    <!-- Portfolio Access Denied Modal -->
+    <div id="portfolioAccessModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="portfolioAccessModal">&times;</span>
+            <div style="text-align: center; padding: 20px;">
+                <h2>🔒 Portfolio Access</h2>
+                <p style="font-size: 18px; margin: 20px 0;">Please login to view our portfolio.</p>
+                <button class="modal-btn" onclick="showModal('loginModal')">Login Now</button>
+                <button class="modal-btn" style="background: white; color: var(--primary-red); border: 2px solid var(--primary-red);" onclick="showModal('registerModal')">Register</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Email Verification Modal -->
+    <div id="emailVerificationModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="emailVerificationModal">&times;</span>
+            <div style="text-align: center; padding: 20px;">
+                <div style="font-size: 64px; margin-bottom: 20px;">📧</div>
+                <h2>Verify Your Email</h2>
+                <p style="font-size: 16px; margin: 20px 0; color: #666;">We've sent a verification code to <strong id="verificationEmail"></strong></p>
+                <form id="verificationForm">
+                    <div class="form-group">
+                        <input type="text" name="verificationCode" placeholder="Enter 6-digit code" maxlength="6" pattern="[0-9]{6}" required style="text-align: center; font-size: 24px; letter-spacing: 8px;">
+                    </div>
+                    <button type="submit" class="modal-btn">Verify Email</button>
+                    <p class="modal-footer">
+                        <a href="#" id="resendCodeLink">Resend Code</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="forgotPasswordModal">&times;</span>
+            <h2>Reset Your Password</h2>
+            <form id="forgotPasswordForm">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" name="email" required placeholder="Enter your registered email">
+                </div>
+                <button type="submit" class="modal-btn">Send Reset Link</button>
+                <p class="modal-footer">
+                    <a href="#" onclick="closeModal('forgotPasswordModal'); showModal('loginModal');">Back to Login</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Payment Confirmation Modal -->
+    <div id="paymentSuccessModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="paymentSuccessModal">&times;</span>
+            <div style="text-align: center; padding: 20px;">
+                <div style="font-size: 80px; color: #28a745; margin-bottom: 20px;">✓</div>
+                <h2 style="color: #28a745;">Payment Successful!</h2>
+                <p style="font-size: 16px; margin: 20px 0;">Your subscription has been activated successfully.</p>
+                <div class="payment-receipt" style="background: #f8f9fa; padding: 20px; border-radius: 12px; margin: 20px 0; text-align: left;">
+                    <h3 style="margin-bottom: 15px;">Receipt Details</h3>
+                    <div style="display: flex; justify-content: space-between; padding: 8px 0;"><span>Transaction ID:</span><strong id="receiptTxnId">-</strong></div>
+                    <div style="display: flex; justify-content: space-between; padding: 8px 0;"><span>Package:</span><strong id="receiptPackage">-</strong></div>
+                    <div style="display: flex; justify-content: space-between; padding: 8px 0;"><span>Amount:</span><strong id="receiptAmount">-</strong></div>
+                    <div style="display: flex; justify-content: space-between; padding: 8px 0;"><span>Date:</span><strong id="receiptDate">-</strong></div>
+                </div>
+                <button class="modal-btn" onclick="downloadReceipt()">📥 Download Receipt</button>
+                <button class="modal-btn" style="background: white; color: var(--primary-red); border: 2px solid var(--primary-red);" onclick="closeModal('paymentSuccessModal'); showModal('dashboardModal');">View Dashboard</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Failed Modal -->
+    <div id="paymentFailedModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="paymentFailedModal">&times;</span>
+            <div style="text-align: center; padding: 20px;">
+                <div style="font-size: 80px; color: #dc3545; margin-bottom: 20px;">✗</div>
+                <h2 style="color: #dc3545;">Payment Failed</h2>
+                <p style="font-size: 16px; margin: 20px 0; color: #666;">We couldn't process your payment. Please try again.</p>
+                <p id="paymentErrorMsg" style="color: #dc3545; font-weight: 600;"></p>
+                <button class="modal-btn" onclick="closeModal('paymentFailedModal'); showModal('paymentModal');">Try Again</button>
+                <button class="modal-btn" style="background: white; color: var(--primary-red); border: 2px solid var(--primary-red);" onclick="closeModal('paymentFailedModal')">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div id="adminLoginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="adminLoginModal">&times;</span>
+            <h2>👨‍💼 Admin Login</h2>
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label>Admin Email</label>
+                    <input type="email" name="email" required placeholder="Enter admin email">
+                </div>
+                <div class="form-group">
+                    <label>Admin Password</label>
+                    <input type="password" name="password" required placeholder="Enter admin password">
+                </div>
+                <button type="submit" class="modal-btn">Login as Admin</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Panel Modal -->
+    <div id="adminPanelModal" class="modal">
+        <div class="modal-content admin-panel-content">
+            <span class="close-modal" data-modal="adminPanelModal">&times;</span>
+            <h2>👨‍💼 Admin Panel</h2>
+            
+            <div class="admin-tabs">
+                <button class="admin-tab active" onclick="switchAdminTab('users')">👥 Users</button>
+                <button class="admin-tab" onclick="switchAdminTab('subscriptions')">💳 Subscriptions</button>
+                <button class="admin-tab" onclick="switchAdminTab('contacts')">📧 Contact Forms</button>
+                <button class="admin-tab" onclick="switchAdminTab('packages')">📦 Packages</button>
+                <button class="admin-tab" onclick="switchAdminTab('portfolio')">🎨 Portfolio</button>
+            </div>
+
+            <div id="adminUsersTab" class="admin-tab-content active">
+                <h3>Registered Users</h3>
+                <div id="adminUsersList" class="admin-list"></div>
+            </div>
+
+            <div id="adminSubscriptionsTab" class="admin-tab-content">
+                <h3>Active Subscriptions</h3>
+                <div id="adminSubscriptionsList" class="admin-list"></div>
+            </div>
+
+            <div id="adminContactsTab" class="admin-tab-content">
+                <h3>Contact Form Submissions</h3>
+                <div id="adminContactsList" class="admin-list"></div>
+            </div>
+
+            <div id="adminPackagesTab" class="admin-tab-content">
+                <h3>Manage Packages</h3>
+                <div id="adminPackagesList" class="admin-list"></div>
+            </div>
+            
+            <div id="adminPortfolioTab" class="admin-tab-content">
+                <h3>Manage Portfolio</h3>
+                <div class="admin-list"></div>
+            </div>
+
+            <button class="modal-btn" style="margin-top: 20px; background: #dc3545;" onclick="adminLogout()">🚪 Logout</button>
+        </div>
+    </div>
+
+    <!-- User Profile Modal -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content dashboard-modal">
+            <span class="close-modal" data-modal="profileModal">&times;</span>
+            <h2>My Profile</h2>
+            <div id="profileDetails">
+                <!-- Filled by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Subscription Modal -->
+    <div id="subscriptionModal" class="modal">
+        <div class="modal-content dashboard-modal">
+            <span class="close-modal" data-modal="subscriptionModal">&times;</span>
+            <h2>My Subscription</h2>
+            <div id="userSubscriptionDetails">
+                <!-- Filled by JS -->
+            </div>
+            <h3 style="margin-top:32px; color:var(--primary-red);">Available Packages</h3>
+            <div id="availablePackagesList">
+                <!-- Filled by JS -->
+            </div>
+        </div>
+    </div>
+
+    <script src="scroll-reveal.js?v=1.0"></script>
+    <script src="script.js"></script>
+</body>
+</html>

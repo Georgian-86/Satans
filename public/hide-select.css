@@ -1,0 +1,4 @@
+/* Hide service dropdown to match reference design */
+.contact-form select {
+    display: none;
+}

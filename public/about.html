@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | SatAns Production</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { background: #f8f9fa; font-family: 'Poppins', sans-serif; }
+        .about-container { max-width: 900px; margin: 40px auto; background: #fff; border-radius: 24px; box-shadow: 0 8px 40px rgba(232,72,85,0.10); padding: 40px; }
+        .about-title { color: var(--primary-red, #e84855); font-size: 2.5rem; font-weight: 900; text-align: center; margin-bottom: 24px; }
+        .about-section { margin-bottom: 32px; }
+        .about-section h2 { color: var(--primary-red, #e84855); font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; }
+        .about-section p, .about-section ul { color: #333; font-size: 1.1rem; line-height: 1.7; }
+        .about-section ul { margin-left: 24px; }
+        .why-us-list { margin-top: 16px; }
+        .meet-team-btn { display: block; margin: 32px auto 0 auto; background: linear-gradient(135deg, #e84855, #f86680); color: #fff; border: none; border-radius: 50px; padding: 18px 40px; font-weight: 800; font-size: 1.2rem; cursor: pointer; box-shadow: 0 6px 20px rgba(232, 72, 85, 0.2); transition: all 0.3s; }
+        .meet-team-btn:hover { background: linear-gradient(135deg, #f86680, #e84855); transform: translateY(-3px); }
+        .about-logo { text-align: center; margin-bottom: 32px; }
+        .about-logo img { max-width: 180px; }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <img src="images/logo.png" alt="SatAns Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="about.html" class="active">ABOUT US</a></li>
+                <li><a href="index.html#contact">CONTACT US</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <button class="dark-mode-toggle" id="darkModeToggle" title="Toggle Dark Mode">
+                    <span class="sun-icon">☀️</span>
+                    <span class="moon-icon">🌙</span>
+                </button>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="about-container">
+        <div class="about-logo">
+            <img src="images/logo.png" alt="SatAns Production Logo">
+        </div>
+        <h1 class="about-title">About SatAns Production</h1>
+        <div class="about-section">
+            <h2>Who We Are</h2>
+            <p>SatAns Production is a creative powerhouse dedicated to transforming brands and businesses through innovative design, strategic marketing, and digital excellence. With years of experience and a passion for storytelling, we help our clients stand out in a crowded marketplace and connect with their audience in meaningful ways.</p>
+        </div>
+        <div class="about-section">
+            <h2>Our Mission</h2>
+            <p>Our mission is to empower businesses of all sizes to achieve their goals through impactful branding, stunning visuals, and results-driven marketing strategies. We believe every brand has a unique story, and we’re here to help you tell it.</p>
+        </div>
+        <div class="about-section">
+            <h2>What We Do</h2>
+            <ul>
+                <li>Social Media Marketing & Management</li>
+                <li>Creative Design & Branding</li>
+                <li>Local SEO & Online Presence Optimization</li>
+                <li>Web Design & Management</li>
+                <li>Portfolio Creation & Showcase</li>
+                <li>Business Strategy & Consulting</li>
+            </ul>
+        </div>
+        <div class="about-section">
+            <h2>Why Choose Us?</h2>
+            <ul class="why-us-list">
+                <li><strong>Proven Experience:</strong> Over 5 years and 25,000+ projects completed for leading brands worldwide.</li>
+                <li><strong>Creative Excellence:</strong> Our team blends creativity with strategy to deliver designs that captivate and convert.</li>
+                <li><strong>End-to-End Solutions:</strong> From branding to marketing to web, we handle everything so you can focus on your business.</li>
+                <li><strong>Client-Centric Approach:</strong> We listen, understand, and tailor our solutions to your unique needs.</li>
+                <li><strong>Trusted by Top Brands:</strong> Our portfolio includes Meta, Google, Facebook, Instagram, WordPress, LinkedIn, and more.</li>
+                <li><strong>Results That Matter:</strong> We don’t just make things look good—we help you grow, engage, and succeed.</li>
+            </ul>
+        </div>
+        <div class="about-section">
+            <h2>Our Values</h2>
+            <ul>
+                <li>Creativity & Innovation</li>
+                <li>Integrity & Transparency</li>
+                <li>Collaboration & Teamwork</li>
+                <li>Continuous Growth</li>
+                <li>Client Success</li>
+            </ul>
+        </div>
+        <button class="meet-team-btn">Meet Our Team</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
