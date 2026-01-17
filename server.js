@@ -26,8 +26,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Serve static files from root directory correctly
-app.use(express.static(__dirname));
+// Serve static files from public directory to match Vercel structure
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Explicit path for root to ensure index.html loads
 app.get('/', (req, res) => {

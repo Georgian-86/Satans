@@ -194,8 +194,9 @@ async function renderDynamicPricing() {
             grid.innerHTML = '<p style="color:#666;text-align:center;">No packages available.</p>';
             return;
         }
-        grid.innerHTML = packages.map(pkg => `
+        grid.innerHTML = packages.map((pkg, index) => `
             <div class="pricing-card">
+                ${index === 1 ? '<div class="ribbon">Most Popular</div>' : ''}
                 <div class="pricing-header">
                     <p class="package-label">${pkg.description || ''}</p>
                     <p class="package-type">${pkg.name}</p>
