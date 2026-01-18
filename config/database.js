@@ -6,7 +6,11 @@ const pool = new Pool({
     database: process.env.DB_NAME || 'satans_db',
     password: process.env.DB_PASSWORD || 'your_password',
     port: process.env.DB_PORT || 5432,
-    ssl: (process.env.DB_HOST && process.env.DB_HOST.includes('supabase')) || process.env.NODE_ENV === 'production' ? { rejectUnauthorized: true } : false
+    ssl: (process.env.DB_HOST && process.env.DB_HOST.includes('supabase'))
+        ? {
+            rejectUnauthorized: process.env.NODE_ENV === 'production'
+        }
+        : false
 });
 
 pool.on('connect', () => {

@@ -793,11 +793,16 @@ app.get('/api/admin/packages', verifyAdmin, async (req, res) => {
 // Get Active Packages (Public)
 app.get('/api/packages', async (req, res) => {
     try {
+        console.log('📦 Fetching packages...');
         const result = await pool.query(
             'SELECT * FROM packages ORDER BY display_order ASC'
         );
+        console.log(`✅ Found ${result.rows.length} packages`);
         res.json(result.rows);
     } catch (error) {
+        console.error('❌ Package fetch error:', error.message);
+        console.error('Error code:', error.code);
+        console.error('Full error:', error);
         res.status(500).json({ error: 'Failed to fetch packages.' });
     }
 });
